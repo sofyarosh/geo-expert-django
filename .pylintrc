@@ -1,0 +1,34 @@
+[MASTER]
+load-plugins=pylint_django
+
+ignore = migrations
+
+[MESSAGES CONTROL]
+disable=
+    django-not-configured,
+    unrecognized-option,
+    bad-plugin-value,
+    unknown-option-value,
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
+    invalid-name,
+    unused-argument,
+    too-many-locals,
+    too-many-branches,
+    too-many-statements,
+    duplicate-code,
+    unused-import,
+    line-too-long,
+    trailing-whitespace,
+    relative-beyond-top-level,
+    R0903,
+    no-name-in-module,
+[FORMAT]
+max-line-length=100
+
+[BASIC]
+good-names=id,pk,i,j,k,ex,Run,_,c,qs,request,form
+
+[REPORTS]
+reports=yes
