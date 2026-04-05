@@ -1,0 +1,19 @@
+{% extends 'countries/base.html' %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5 text-center">
+        <div class="card p-5 shadow-lg border-0 rounded-4">
+            <h2 class="fw-bold mb-3 text-primary">🌍 Готовы начать?</h2>
+            <hr>
+            <p class="fs-5">Режим: <strong>{{ continent }}</strong></p>
+            <p class="text-muted">Всего стран в этом режиме: <strong>{{ count }}</strong></p>
+            
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-lg w-100 mt-4 rounded-pill shadow">ПОЕХАЛИ!</button>
+            </form>
+            <a href="{% url 'index' %}" class="btn btn-link mt-3 text-muted">Назад к выбору</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

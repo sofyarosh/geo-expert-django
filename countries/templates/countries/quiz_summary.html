@@ -1,0 +1,44 @@
+{% extends 'countries/base.html' %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8 text-center">
+        <div class="card p-5 shadow-sm border-0 rounded-4 animate__animated animate__fadeIn">
+            <h1 class="display-4 fw-bold text-primary mb-4">Раунд завершен! 🏁</h1>
+            
+            <div class="row justify-content-center mb-4">
+                <div class="col-6 p-4 bg-light rounded-4 border">
+                    <div class="display-1 fw-bold text-success">{{ score }}</div>
+                    <div class="text-muted">из {{ total }} стран угадано</div>
+                </div>
+            </div>
+
+            {% if mistakes %}
+                <div class="text-start mt-4">
+                    <h5 class="text-danger fw-bold border-bottom pb-2">💡 Стоит повторить (ошибки раунда):</h5>
+                    <div class="row row-cols-1 row-cols-md-2 g-3 mt-2">
+                        {% for m in mistakes %}
+                        <div class="col">
+                            <div class="d-flex align-items-center p-3 border rounded shadow-sm bg-white">
+                                <img src="{{ m.flag }}" width="50" class="me-3 border rounded shadow-sm">
+                                <div>
+                                    <div class="fw-bold text-dark">{{ m.name }}</div>
+                                    <div class="small text-danger">Ответ: {{ m.capital }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-success mt-4 fs-5 py-4 border-0 shadow-sm">
+                    🏆 <strong>Идеально!</strong> Вы прошли весь список без единой ошибки.
+                </div>
+            {% endif %}
+
+            <div class="mt-5">
+                <a href="{% url 'index' %}" class="btn btn-primary btn-lg rounded-pill px-5 shadow">На главную</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

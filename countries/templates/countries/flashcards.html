@@ -1,0 +1,23 @@
+{% extends 'countries/base.html' %}
+{% block content %}
+<div class="text-center py-5">
+    <h2 class="fw-bold" style="color: #2668C5;">Карточки для запоминания флагов</h2>
+    <p class="text-muted">Нажми и удерживай карточку, чтобы увидеть название</p>
+    
+    <div class="d-flex flex-wrap justify-content-center mt-4">
+        {% for country in countries %}
+        <div class="flip-card animate__animated animate__fadeIn">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="{{ country.flag_url }}" alt="flag">
+                </div>
+                <div class="flip-card-back">
+                    <h3 class="fw-bold">{{ country.name }}</h3>
+                    <p class="small opacity-75">{{ country.capital }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

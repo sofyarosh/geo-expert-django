@@ -1,0 +1,59 @@
+{% extends 'countries/base.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+        <div class="card shadow border-0 rounded-4 overflow-hidden">
+            
+            {# 1. ЭКРАН УСПЕХА #}
+            {% if state == 'correct' %}
+            <div class="bg-success text-white p-5 text-center animate__animated animate__fadeIn">
+                <h1 class="display-1">🎉</h1>
+                <h2 class="fw-bold">Правильно!</h2>
+                <p class="fs-5">Столица {{ country.name }} — это <b>{{ country.capital }}</b></p>
+                <a href="/quiz/?state=next" class="btn btn-light btn-lg rounded-pill px-5 mt-3 shadow-sm">Далее →</a>
+            </div>
+
+            {# 2. ЭКРАН ПОДСКАЗКИ #}
+            {% elif state == 'reveal' %}
+            <div class="bg-warning p-5 text-center text-dark animate__animated animate__fadeIn">
+                <h1 class="display-1">💡</h1>
+                <h3>Запоминайте:</h3>
+                <h1 class="fw-bold mt-2">{{ country.name }}</h1>
+                <h2 class="text-decoration-underline">{{ country.capital }}</h2>
+                <a href="/quiz/?state=next" class="btn btn-dark btn-lg rounded-pill px-5 mt-4 shadow">Понятно, дальше</a>
+            </div>
+
+            {# 3. ЭКРАН ВОПРОСА #}
+            {% else %}
+            <div class="p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <span class="badge bg-primary fs-6 p-2 rounded-pill shadow-sm">Счет раунда: {{ score }}</span>
+                    <a href="{% url 'quiz_finish' %}" class="btn btn-sm btn-outline-danger rounded-pill">🏁 Завершить</a>
+                </div>
+
+                <div class="text-center">
+                    <h5 class="text-muted">Какая столица у этой страны?</h5>
+                    <img src="{{ country.flag_url }}" class="img-fluid rounded shadow-sm my-3 border" style="max-height: 160px;">
+                    <h2 class="fw-bold mb-4 text-primary">{{ country.name }}</h2>
+
+                    <form method="post" class="text-start">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <button type="submit" class="btn btn-primary btn-lg w-100 mt-3 shadow rounded-pill">Проверить ответ</button>
+                    </form>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        {# ИСПРАВЛЕННЫЕ ССЫЛКИ #}
+                        <a href="/quiz/?state=next" class="btn btn-link text-secondary text-decoration-none">Пропустить</a>
+                        <a href="/quiz/?state=reveal" class="btn btn-link text-warning fw-bold text-decoration-none">Показать ответ</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+        </div>
+        <p class="text-center mt-3 text-muted">Игрок: <span class="fw-bold">{{ name }}</span></p>
+    </div>
+</div>
+{% endblock %}

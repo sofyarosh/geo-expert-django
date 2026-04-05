@@ -1,0 +1,162 @@
+{% load django_bootstrap5 %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoExpert | Образовательный тренажер</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
+    
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    
+    <!-- Google Font: Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <style>
+    /* Шрифт и градиентный фон */
+
+    body { 
+        font-family: 'Open Sans', sans-serif; 
+        background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 50%, #93c5fd 100%);
+        background-attachment: fixed;
+        min-height: 100vh;
+        color: #334155;
+    }
+    
+
+    /* Шапка синего цвета 2668C5 */
+    .navbar { 
+        background-color: #2668C5 !important; 
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .navbar-brand { 
+        font-family: 'Montserrat', sans-serif !important; 
+        font-weight: 800 !important; 
+        color: #ffffff !important; 
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .nav-link { color: #ffffff !important; }
+
+    /* Кнопки на главной (высота 40px) */
+    .continent-btn {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        text-decoration: none !important;
+        color: white !important;
+    }
+    .continent-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+    /* Цвета кнопок */
+    .btn-eu { background-color: #3b82f6; }
+    .btn-as { background-color: #f59e0b; }
+    .btn-af { background-color: #10b981; }
+    .btn-na { background-color: #ef4444; }
+    .btn-sa { background-color: #8b5cf6; }
+    .btn-oc { background-color: #06b6d4; }
+    .btn-all { background-color: #475569; }
+
+    .flip-card {
+        width: 300px;
+        height: 200px; 
+        perspective: 1000px;
+        margin: 20px;
+    }
+    .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        cursor: pointer;
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        border-radius: 15px;
+    }
+  
+    .flip-card:active .flip-card-inner {
+        transform: rotateY(180deg);
+    }
+    .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+    }
+    .flip-card-front img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .flip-card-back {
+        background-color: #2668C5; /* Наш синий цвет */
+        color: white;
+        transform: rotateY(180deg);
+        padding: 20px;
+        text-align: center;
+        flex-direction: column;
+    }
+     .btn-add-custom {
+    background-color: #2668C5;
+    color: white !important;
+    padding: 10px 20px;
+    border-radius: 30px; /* Делает её закругленной по краям */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(38, 104, 197, 0.3);
+    text-decoration: none !important;
+    transition: all 0.3s;
+    border: none;
+    }
+    .btn-add-custom:hover {
+    transform: translateY(-2px);
+    background-color: #1d50a2;
+    box-shadow: 0 6px 15px rgba(38, 104, 197, 0.4);
+    }
+    
+    .progress { height: 20px; border-radius: 10px; background: #fff; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
+    .progress-bar { background-color: #2668C5; }
+</style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{% url 'index' %}">🌍 GEO<span class="text-warning">EXPERT</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Главная</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'flashcards' %}">Флаги</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'quiz' %}?continent=all">Все столицы</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'list' %}">База знаний</a></li>
+            </ul>
+    
+            </ul>
+        </div>
+    </div>
+</nav>
+    <div class="container pb-5">
+        {% block content %}{% endblock %}
+    </div>
+    {% bootstrap_javascript %}
+</body>
+</html>
